@@ -121,7 +121,7 @@ internal class CaptureCameraControllerImpl : CaptureCameraController {
     override suspend fun startRecording() {
         check(captureMode.value == CaptureMode.VIDEO_CAPTURE)
         check(captureState.latest() is Initialized) { MUST_BE_INITIALIZED_USE_CASE }
-        check(::imageOutputFileGenerator.isInitialized) { MUST_BE_INITIALIZED_OUTPUT_FILE_GENERATOR }
+        check(::videoOutputFileGenerator.isInitialized) { MUST_BE_INITIALIZED_OUTPUT_FILE_GENERATOR }
         dstFilePath = videoOutputFileGenerator.generate().absolutePath
         setCaptureState(StartRecording(dstFilePath!!))
     }
@@ -130,7 +130,7 @@ internal class CaptureCameraControllerImpl : CaptureCameraController {
     override suspend fun takePicture() {
         check(captureMode.value == CaptureMode.IMAGE_CAPTURE)
         check(captureState.latest() is Initialized) { MUST_BE_INITIALIZED_USE_CASE }
-        check(::videoOutputFileGenerator.isInitialized) { MUST_BE_INITIALIZED_OUTPUT_FILE_GENERATOR }
+        check(::imageOutputFileGenerator.isInitialized) { MUST_BE_INITIALIZED_OUTPUT_FILE_GENERATOR }
         dstFilePath = imageOutputFileGenerator.generate().absolutePath
         setCaptureState(TakePicture(dstFilePath!!))
     }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.camera.core.CameraInfo
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import jp.co.shcl.capture_camera.CaptureCameraControllerProvider
@@ -42,21 +43,36 @@ class CameraZoomRatioControlFragment : Fragment() {
                 cameraInfo = nullableCameraInfo
                 cameraInfo?.let { info ->
                     info.zoomState.observe(viewLifecycleOwner) { zoomState ->
+
+                        // ズーム比率を取得してテキストへ反映
                         "%.1fx".format(zoomState.zoomRatio)
                             .also { binding.textViewZoomRatio.text = it }
+
+                        // カメラのズームへの対応をViewの可視性へ反映
+                        (zoomState.maxZoomRatio != zoomState.minZoomRatio).also { canZoom: Boolean ->
+                            binding.frameLayout.isVisible = canZoom
+                            if (!canZoom) LogUtil.put("This camera does not support zoom.")
+                        }
                     }
                 }
             }
         }
 
         binding.frameLayout.setOnClickListener {
-            cameraInfo?.zoomState?.value?.let {
+            // ZoomState取得
+            cameraInfo?.zoomState?.value?.let { zoomState ->
+                // ズーム比率設定がSuspend関数のためCoroutineScopeで実行
                 viewLifecycleOwner.lifecycleScope.launch {
+                    // ズーム比率設定
                     captureCameraController.setZoomRatio(
-                        if (it.zoomRatio == it.minZoomRatio) {
-                            if (it.maxZoomRatio > ZOOM_RATIO_SET_ON_CLICK) ZOOM_RATIO_SET_ON_CLICK
-                            else it.maxZoomRatio
-                        } else it.minZoomRatio
+                        // 現在のズーム比率が最小の場合
+                        if (zoomState.zoomRatio == zoomState.minZoomRatio) {
+                            // 最大ズーム比率が既定より大きい場合、既定に設定
+                            if (zoomState.maxZoomRatio > ZOOM_RATIO_SET_ON_CLICK) ZOOM_RATIO_SET_ON_CLICK
+                            // そうでない場合、最大に設定
+                            else zoomState.maxZoomRatio
+                        } // 現在のズーム比率が最小ではない場合、最小に設定
+                        else zoomState.minZoomRatio
                     )
                 }
             } ?: run {
