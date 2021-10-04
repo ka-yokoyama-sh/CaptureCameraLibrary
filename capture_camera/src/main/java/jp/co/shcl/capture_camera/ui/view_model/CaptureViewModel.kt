@@ -68,9 +68,9 @@ internal class CaptureViewModel(
     }
 
     /** 撮影失敗時の処理 */
-    fun onCaptureFailed() {
+    fun onCaptureFailed(message: String) {
         viewModelScope.launch {
-            controllerImpl.onCaptureFailed()
+            controllerImpl.onCaptureFailed(message)
         }
     }
 

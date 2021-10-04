@@ -18,7 +18,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.snackbar.Snackbar
 import jp.co.shcl.capture_camera.CaptureCameraControllerProvider
 import jp.co.shcl.capture_camera.databinding.FragmentCaptureBinding
 import jp.co.shcl.capture_camera.model.*
@@ -59,8 +58,7 @@ class CaptureFragment : Fragment() {
             // 撮影失敗時
             override fun onError(exception: ImageCaptureException) {
                 LogUtil.write(requireContext(), exception.message)
-                viewModel.onCaptureFailed()
-                showErrorSnackbar(exception.message)
+                viewModel.onCaptureFailed(exception.message ?: "No error message.")
             }
         }
 
@@ -76,8 +74,7 @@ class CaptureFragment : Fragment() {
             // 撮影失敗時
             override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
                 LogUtil.write(requireContext(), message)
-                viewModel.onCaptureFailed()
-                showErrorSnackbar(message)
+                viewModel.onCaptureFailed(message)
             }
         }
 
@@ -251,17 +248,5 @@ class CaptureFragment : Fragment() {
         cameraController.bindToLifecycle(viewLifecycleOwner)
         binding.previewView.controller = cameraController
         return cameraController
-    }
-
-    private fun showErrorSnackbar(errorMessage: String?) {
-        Snackbar
-            .make(
-                binding.previewView,
-                errorMessage?.let {
-                    "撮影に失敗しました. ($it)"
-                } ?: "撮影に失敗しました.",
-                Snackbar.LENGTH_LONG
-            )
-            .show()
     }
 }

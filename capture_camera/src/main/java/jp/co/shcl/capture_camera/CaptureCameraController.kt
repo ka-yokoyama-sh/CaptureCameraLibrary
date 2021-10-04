@@ -85,7 +85,7 @@ interface CaptureCameraController {
 
     /**
      * 撮影モードを設定.
-     * [CaptureFragment][jp.co.shcl.media_capture.ui.CaptureFragment]を開く前に撮影モードを設定することで
+     * [CaptureFragment][jp.co.shcl.capture_camera.ui.CaptureFragment]を開く前に撮影モードを設定することで
      * 開始時のモードを選択できる.
      * @param mode  設定する撮影モード
      */

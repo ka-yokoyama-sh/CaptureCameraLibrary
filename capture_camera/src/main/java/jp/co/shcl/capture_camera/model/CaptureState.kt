@@ -34,4 +34,4 @@ object StopRecording: CaptureState, VideoCapturing
 data class CapturedFileSaved(val outputFilePath: String): CaptureState, Captured
 
 /** 撮影失敗状態 */
-object CaptureFailed: CaptureState, Captured
+data class CaptureFailed(val message: String): CaptureState, Captured
