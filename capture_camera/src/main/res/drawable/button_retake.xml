@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:top="0dp"
+        android:bottom="0dp"
+        android:left="0dp"
+        android:right="0dp">
+        <shape android:shape="oval" android:useLevel="false">
+            <solid android:color="@color/black_op_12" />
+            <size
+                android:width="@dimen/width_button_capture_control"
+                android:height="@dimen/height_button_capture_control" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_undo"
+        android:top="16dp"
+        android:bottom="16dp"
+        android:left="16dp"
+        android:right="16dp">
+    </item>
+    <item
+        android:top="0dp"
+        android:bottom="0dp"
+        android:left="0dp"
+        android:right="0dp">
+        <shape
+            android:shape="ring"
+            android:useLevel="false"
+            android:innerRadius="32dp"
+            android:thickness="4dp">
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
+</layer-list>

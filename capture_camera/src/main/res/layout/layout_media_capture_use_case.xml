@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Space
+        android:id="@+id/spaceHeader"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentCapture"
+        android:name="jp.co.shcl.capture_camera.ui.CaptureFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_capture" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentRecordDuration"
+        android:name="jp.co.shcl.capture_camera.ui.RecordDurationFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/spaceHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/spaceHeader"
+        tools:layout="@layout/fragment_record_duration" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentCaptureControl"
+        android:name="jp.co.shcl.capture_camera.ui.CaptureControlFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_capture_control" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentCameraZoomRatioControl"
+        android:name="jp.co.shcl.capture_camera.ui.CameraZoomRatioControlFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/fragmentCaptureControl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_camera_zoom_ratio_control" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentCameraSelectorControl"
+        android:name="jp.co.shcl.capture_camera.ui.CameraSelectorControlFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/hGuidelineCaptureButtonCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/vGuideLineCenter"
+        app:layout_constraintTop_toTopOf="@+id/hGuidelineCaptureButtonCenter"
+        tools:layout="@layout/fragment_camera_selector_control" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hGuidelineCaptureButtonCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/height_capture_button_center" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vGuideLineCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

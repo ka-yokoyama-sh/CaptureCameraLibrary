@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/buttonRetake"
+        android:layout_width="@dimen/width_button_capture_control"
+        android:layout_height="@dimen/height_button_capture_control"
+        android:visibility="gone"
+        android:background="@drawable/button_retake" />
+    <ImageView
+        android:id="@+id/buttonStop"
+        android:layout_width="@dimen/width_button_capture_control"
+        android:layout_height="@dimen/height_button_capture_control"
+        android:background="@drawable/button_stop" />
+    <ImageView
+        android:id="@+id/buttonRecord"
+        android:layout_width="@dimen/width_button_capture_control"
+        android:layout_height="@dimen/height_button_capture_control"
+        android:background="@drawable/button_rec" />
+    <ImageView
+        android:id="@+id/buttonShutter"
+        android:layout_width="@dimen/width_button_capture_control"
+        android:layout_height="@dimen/height_button_capture_control"
+        android:background="@drawable/button_shutter" />
+</FrameLayout>

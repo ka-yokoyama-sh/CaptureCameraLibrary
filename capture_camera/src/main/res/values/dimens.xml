@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="width_button_capture_control">72dp</dimen>
+    <dimen name="height_button_capture_control">72dp</dimen>
+    <dimen name="height_capture_button_center">52dp</dimen>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.CaptureControlFragment">
+
+    <include
+        android:id="@+id/includeCaptureController"
+        layout="@layout/layout_capture_button"
+        android:layout_width="@dimen/width_button_capture_control"
+        android:layout_height="@dimen/height_button_capture_control"
+        app:layout_constraintBottom_toTopOf="@+id/hGuidelineCaptureButtonCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hGuidelineCaptureButtonCenter" />
+
+    <include
+        android:id="@+id/includeCaptureModeSwitch"
+        layout="@layout/layout_capture_mode_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/includeCaptureController"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+<!--    <com.google.android.material.imageview.ShapeableImageView-->
+<!--        android:id="@+id/imageViewThumbnailCaptured"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/includeCaptureController"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/includeCaptureController"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/includeCaptureController"-->
+<!--        app:shapeAppearanceOverlay="@style/SHInspectionSupport.ShapeAppearanceOverlay.RoundedCorners" />-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hGuidelineCaptureButtonCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/height_capture_button_center" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
