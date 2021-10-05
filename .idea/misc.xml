@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/1140yokoyama/AndroidStudioProjects/CaptureCameraLibrary/capture_camera/src/main/res/drawable/shape_zoom_ratio_background.xml" value="0.225" />
         <entry key="..\:/Users/1140yokoyama/AndroidStudioProjects/CaptureCameraLibrary/capture_camera/src/main/res/layout/fragment_camera_zoom_ratio_control.xml" value="0.1983695652173913" />
-        <entry key="..\:/Users/1140yokoyama/AndroidStudioProjects/CaptureCameraLibrary/capture_camera/src/main/res/layout/fragment_capture.xml" value="0.4071557971014493" />
+        <entry key="..\:/Users/1140yokoyama/AndroidStudioProjects/CaptureCameraLibrary/capture_camera/src/main/res/layout/fragment_capture.xml" value="0.22" />
         <entry key="..\:/Users/1140yokoyama/AndroidStudioProjects/CaptureCameraLibrary/capture_camera/src/main/res/layout/fragment_capture_test.xml" value="0.334549244398124" />
         <entry key="..\:/Users/1140yokoyama/AndroidStudioProjects/CaptureCameraLibrary/capture_camera/src/main/res/layout/layout_media_capture_use_case.xml" value="0.4134963768115942" />
       </map>

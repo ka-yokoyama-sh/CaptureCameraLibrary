@@ -59,11 +59,11 @@ internal class CaptureCameraControllerImpl : CaptureCameraController {
     /** 直近の出力ファイル */
     private var dstFilePath: String? = null
 
-    /** カメラ切り替え有効性の[MutableStateFlow] */
-    private val _canSwitchCamera = MutableStateFlow(false)
+    /** カメラ数の[MutableStateFlow] */
+    private val _cameraCount = MutableStateFlow(0)
 
-    /** カメラ切り替え有効性の[StateFlow] */
-    override val canSwitchCamera: StateFlow<Boolean> = _canSwitchCamera
+    /** カメラ数の[StateFlow] */
+    override val cameraCount: StateFlow<Int> = _cameraCount
 
     /** 現在のカメラの向き[CameraFacing]の[MutableStateFlow] */
     private val _currentCameraFacing = MutableStateFlow(DEFAULT_CAMERA_FACING)
@@ -149,6 +149,49 @@ internal class CaptureCameraControllerImpl : CaptureCameraController {
         else setCaptureState(CameraClosed)
     }
 
+    /**
+     * 撮影モードを設定.
+     * [CaptureFragment][jp.co.shcl.capture_camera.ui.CaptureFragment]を開く前に撮影モードを設定することで
+     * 開始時のモードを選択できる.
+     * @param mode  設定する撮影モード
+     */
+    override fun setCaptureMode(mode: CaptureMode) {
+        _captureMode.value = mode
+    }
+
+    /**
+     * ズーム比率を設定.
+     * @param float 設定する値
+     */
+    override suspend fun setZoomRatio(float: Float) {
+        _zoomRatioSettingRequestValue.emit(float)
+    }
+
+    /**
+     * カメラ向きを設定.
+     * [canSwitchCamera]がfalseの場合は、設定せずにfalseを返す.
+     * @param facing カメラ向きを示す[CameraFacing]
+     * @return 正常に値を発行できた場合true
+     */
+    override fun setCameraFacing(facing: CameraFacing): Boolean {
+        return if (captureState.latest() !is Capturing) {
+            _currentCameraFacing.value = facing
+            true
+        } else {
+            LogUtil.put("Can not set camera facing during capturing.")
+            false
+        }
+    }
+
+    /**
+     * カメラ向きを逆向きに設定.
+     * [canSwitchCamera]がfalseの場合は、設定せずにfalseを返す.
+     * @return 正常に値を発行できた場合true
+     */
+    override fun toggleCamera(): Boolean {
+        return setCameraFacing(currentCameraFacing.value.toggle())
+    }
+
     /** キャプチャーフラグメント初期化完了時の処理 */
     internal suspend fun onCaptureFragmentInitialized() {
         _hasCameraFragment.value = true
@@ -178,16 +221,6 @@ internal class CaptureCameraControllerImpl : CaptureCameraController {
     }
 
     /**
-     * 撮影モードを設定.
-     * [CaptureFragment][jp.co.shcl.capture_camera.ui.CaptureFragment]を開く前に撮影モードを設定することで
-     * 開始時のモードを選択できる.
-     * @param mode  設定する撮影モード
-     */
-    override fun setCaptureMode(mode: CaptureMode) {
-        _captureMode.value = mode
-    }
-
-    /**
      * カメラ情報を[CaptureCameraControllerImpl]のプロパティへ設定.
      * @param cameraInfo    カメラ情報
      */
@@ -196,41 +229,11 @@ internal class CaptureCameraControllerImpl : CaptureCameraController {
     }
 
     /**
-     * ズーム比率を設定.
-     * @param float 設定する値
-     */
-    override suspend fun setZoomRatio(float: Float) {
-        _zoomRatioSettingRequestValue.emit(float)
-    }
-
-    /**
      * カメラ向き変更の有効性を設定.
      * @param boolean 有効な場合true
      */
-    internal fun setCanSwitchCameraFacing(boolean: Boolean) {
-        _canSwitchCamera.value = boolean
-    }
-
-    /**
-     * カメラ向きを設定.
-     * [canSwitchCamera]がfalseの場合は、設定せずにfalseを返す.
-     * @param facing カメラ向きを示す[CameraFacing]
-     * @return 正常に値を発行できた場合true
-     */
-    override fun setCameraFacing(facing: CameraFacing): Boolean {
-        return if (canSwitchCamera.value) {
-            _currentCameraFacing.value = facing
-            true
-        } else false
-    }
-
-    /**
-     * カメラ向きを逆向きに設定.
-     * [canSwitchCamera]がfalseの場合は、設定せずにfalseを返す.
-     * @return 正常に値を発行できた場合true
-     */
-    override fun toggleCamera(): Boolean {
-        return setCameraFacing(currentCameraFacing.value.toggle())
+    internal fun setCameraCount(count: Int) {
+        _cameraCount.value = count
     }
 
     /**

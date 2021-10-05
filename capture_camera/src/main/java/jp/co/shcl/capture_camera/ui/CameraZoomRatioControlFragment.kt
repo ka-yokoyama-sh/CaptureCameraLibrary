@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.camera.core.CameraInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -36,12 +35,9 @@ class CameraZoomRatioControlFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var cameraInfo: CameraInfo? = null
-
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             captureCameraController.cameraInfo.collect { nullableCameraInfo ->
-                cameraInfo = nullableCameraInfo
-                cameraInfo?.let { info ->
+                nullableCameraInfo?.let { info ->
                     info.zoomState.observe(viewLifecycleOwner) { zoomState ->
 
                         // ズーム比率を取得してテキストへ反映
@@ -60,7 +56,7 @@ class CameraZoomRatioControlFragment : Fragment() {
 
         binding.frameLayout.setOnClickListener {
             // ZoomState取得
-            cameraInfo?.zoomState?.value?.let { zoomState ->
+            captureCameraController.cameraInfo.value?.zoomState?.value?.let { zoomState ->
                 // ズーム比率設定がSuspend関数のためCoroutineScopeで実行
                 viewLifecycleOwner.lifecycleScope.launch {
                     // ズーム比率設定

@@ -12,7 +12,6 @@
         android:layout_width="36sp"
         android:layout_height="36sp"
         android:layout_margin="4dp"
-        android:alpha="0.3"
         android:layout_gravity="center"
         android:background="@drawable/shape_zoom_ratio_background"
         tools:ignore="ContentDescription" />

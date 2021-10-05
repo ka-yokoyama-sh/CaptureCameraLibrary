@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import jp.co.shcl.capture_camera.CaptureCameraControllerProvider
 import jp.co.shcl.capture_camera.databinding.FragmentCameraSelectorControlBinding
+import jp.co.shcl.capture_camera.model.Capturing
 import kotlinx.coroutines.flow.collect
 
 class CameraSelectorControlFragment : Fragment() {
@@ -28,11 +30,19 @@ class CameraSelectorControlFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // カメラの数を購読
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            controllerImpl.cameraCount.collect {
+                // カメラ向き切り替えボタンの可視性に反映
+                binding.buttonSwitchCamera.isVisible = it == 2
+            }
+        }
+
         // カメラ向き切り替えの有効性を購読
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            controllerImpl.canSwitchCamera.collect {
+            controllerImpl.captureState.collect {
                 // カメラ向き切り替えボタンの有効性に反映
-                binding.buttonSwitchCamera.isEnabled = it
+                binding.buttonSwitchCamera.isEnabled = it !is Capturing
             }
         }
 

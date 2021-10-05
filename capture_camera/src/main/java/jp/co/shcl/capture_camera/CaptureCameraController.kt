@@ -42,8 +42,8 @@ interface CaptureCameraController {
     /** ズーム設定要求値の[SharedFlow] */
     val zoomRatioSettingRequestValue: SharedFlow<Float>
 
-    /** カメラ切り替え有効性の[StateFlow] */
-    val canSwitchCamera: StateFlow<Boolean>
+    /** カメラ数の[StateFlow] */
+    val cameraCount: StateFlow<Int>
 
     /** 現在のカメラの向き[CameraFacing]の[StateFlow] */
     val currentCameraFacing: StateFlow<CameraFacing>

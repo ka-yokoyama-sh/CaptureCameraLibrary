@@ -2,30 +2,19 @@ package jp.co.shcl.capture_camera.ui.view_model
 
 import androidx.camera.core.CameraInfo
 import androidx.lifecycle.*
-import jp.co.shcl.capture_camera.model.*
 import jp.co.shcl.capture_camera.CaptureCameraControllerImpl
-import kotlinx.coroutines.flow.onEach
+import jp.co.shcl.capture_camera.model.CameraFacing
+import jp.co.shcl.capture_camera.model.CaptureMode
+import jp.co.shcl.capture_camera.model.CaptureState
 import kotlinx.coroutines.launch
 
 internal class CaptureViewModel(
     private val controllerImpl: CaptureCameraControllerImpl
 ) : ViewModel() {
 
-    /** カメラ数 */
-    var cameraCount = 0
-        private set
-
-    /** カメラが2機存在する場合true */
-    private val haveTwoCameras get() = cameraCount == 2
-
     /** 撮影状態を指定する[CaptureState]の[LiveData] */
     val captureState: LiveData<CaptureState> =
-        controllerImpl.captureState
-            .onEach {
-                if (it is Captured) controllerImpl.setCanSwitchCameraFacing(haveTwoCameras)
-                if (it is StartRecording) controllerImpl.setCanSwitchCameraFacing(false)
-            }
-            .asLiveData(viewModelScope.coroutineContext)
+        controllerImpl.captureState.asLiveData(viewModelScope.coroutineContext)
 
     /** 撮影モードを指定する[CaptureMode]の[LiveData] */
     val captureMode: LiveData<CaptureMode> =
@@ -95,8 +84,7 @@ internal class CaptureViewModel(
      * @param count カメラ数
      */
     fun setCameraCount(count: Int) {
-        cameraCount = count
-        controllerImpl.setCanSwitchCameraFacing(haveTwoCameras)
+        controllerImpl.setCameraCount(count)
     }
 
     class Factory(private val captureCameraControllerImpl: CaptureCameraControllerImpl) :
