@@ -116,8 +116,7 @@ class CaptureFragment : Fragment() {
             when (it) {
                 is Initialized -> {
                     // アクティビティーの回転ロックを解除
-                    requireActivity().requestedOrientation =
-                        ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                    requireActivity().requestedOrientation = viewModel.defaultScreenOrientation
                 }
                 is TakePicture -> {
                     if (cameraController.isImageCaptureEnabled)
@@ -137,10 +136,12 @@ class CaptureFragment : Fragment() {
             }
         }
 
+        // ズーム比率の監視と設定
         viewModel.zoomRatioSettingRequestValue.observe(viewLifecycleOwner) {
             cameraController.setZoomRatio(it)
         }
 
+        // カメラ向きの監視と設定
         viewModel.cameraSelector.observe(viewLifecycleOwner) {
             if (cameraController.currentCameraFacing() != it) {
                 cameraController.setCameraFacing(it)
@@ -180,7 +181,7 @@ class CaptureFragment : Fragment() {
         super.onDestroyView()
 
         viewModel.onFragmentDestroy()
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        requireActivity().requestedOrientation = viewModel.defaultScreenOrientation
         _binding = null
     }
 

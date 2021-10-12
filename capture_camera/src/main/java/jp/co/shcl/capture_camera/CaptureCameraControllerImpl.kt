@@ -1,5 +1,6 @@
 package jp.co.shcl.capture_camera
 
+import android.content.pm.ActivityInfo
 import androidx.camera.core.CameraInfo
 import jp.co.shcl.capture_camera.model.*
 import jp.co.shcl.capture_camera.util.LogUtil
@@ -70,6 +71,13 @@ internal class CaptureCameraControllerImpl : CaptureCameraController {
 
     /** 現在のカメラの向き[CameraFacing]の[StateFlow] */
     override val currentCameraFacing: StateFlow<CameraFacing> = _currentCameraFacing
+
+    /**
+     * 既定の画面向きを示す[ActivityInfo]のSCREEN_ORIENTATION定数.
+     * 動画撮影時の画面向き固定からの復帰時に、再設定する際の画面向き.
+     * 既定値は[SCREEN_ORIENTATION_UNSPECIFIED][ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED]
+     */
+    override var defaultScreenOrientation: Int = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
     /** 画像出力用ファイル生成関数 */
     private lateinit var imageOutputFileGenerator: CaptureCameraController.ImageOutputFileGenerator

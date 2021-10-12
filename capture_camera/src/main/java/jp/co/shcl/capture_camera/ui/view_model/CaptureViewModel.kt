@@ -1,5 +1,6 @@
 package jp.co.shcl.capture_camera.ui.view_model
 
+import android.content.pm.ActivityInfo
 import androidx.camera.core.CameraInfo
 import androidx.lifecycle.*
 import jp.co.shcl.capture_camera.CaptureCameraControllerImpl
@@ -27,6 +28,9 @@ internal class CaptureViewModel(
     /** カメラセレクターを指定する[CameraFacing]の[LiveData] */
     val cameraSelector: LiveData<CameraFacing> =
         controllerImpl.currentCameraFacing.asLiveData(viewModelScope.coroutineContext)
+
+    /** 既定の画面向きを示す[ActivityInfo]のSCREEN_ORIENTATION定数.  */
+    val defaultScreenOrientation: Int get() = controllerImpl.defaultScreenOrientation
 
     /** 撮影フラグメント初期化時の処理 */
     fun onFragmentInitialized() {
