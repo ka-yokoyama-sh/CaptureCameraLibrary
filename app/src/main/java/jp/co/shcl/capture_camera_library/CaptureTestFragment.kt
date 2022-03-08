@@ -17,7 +17,8 @@ class CaptureTestFragment : Fragment() {
 
     private var _binding: FragmentCaptureTestBinding? = null
     private val binding get() = _binding!!
-    private val captureUseCase: CaptureCameraController = CaptureCameraControllerProvider.getInstance()
+    private val captureUseCase: CaptureCameraController =
+        CaptureCameraControllerProvider.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +32,18 @@ class CaptureTestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (savedInstanceState == null) {
-            captureUseCase.setImageOutputFileGenerator(imageOutputFileGenerator)
-            captureUseCase.setVideoOutputFileGenerator(videoOutputFileGenerator)
+            captureUseCase.setImageOutputFileGenerator {
+                File(
+                    requireContext().cacheDir,
+                    "test.jpg"
+                )
+            }
+            captureUseCase.setVideoOutputFileGenerator {
+                File(
+                    requireContext().cacheDir,
+                    "test.mp4"
+                )
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -50,18 +61,6 @@ class CaptureTestFragment : Fragment() {
         super.onDestroyView()
 
         _binding = null
-    }
-
-    private val imageOutputFileGenerator = object : CaptureCameraController.ImageOutputFileGenerator {
-        override fun generate(): File {
-            return File(requireContext().cacheDir, "test.jpg")
-        }
-    }
-
-    private val videoOutputFileGenerator = object : CaptureCameraController.VideoOutputFileGenerator {
-        override fun generate(): File {
-            return File(requireContext().cacheDir, "test.mp4")
-        }
     }
 
 }

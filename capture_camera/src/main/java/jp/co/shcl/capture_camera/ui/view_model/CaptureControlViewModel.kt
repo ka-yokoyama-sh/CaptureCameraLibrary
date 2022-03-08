@@ -46,7 +46,7 @@ internal class CaptureControlViewModel(
     class Factory(private val captureCameraControllerImpl: CaptureCameraControllerImpl) :
         ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return CaptureControlViewModel(captureCameraControllerImpl) as T
         }
     }
